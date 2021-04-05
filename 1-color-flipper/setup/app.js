@@ -1,7 +1,7 @@
 const colors = ['green', 'red', 'rgba(133,122,200)', '#f15025'];
 
 const btn = document.getElementById('btn');
-const color = document.querySelector('.color');
+const colorSpan = document.querySelector('.color');
 const siteBody = document.querySelector('body');
 
 btn.addEventListener('click', changeColor);
@@ -9,7 +9,7 @@ btn.addEventListener('click', changeColor);
 function changeColor() {
   const randomColor = chooseColor();
   siteBody.style.backgroundColor = colors[randomColor];
-  color.innerText = colors[randomColor];
+  colorSpan.innerText = colors[randomColor];
 }
 
 function chooseColor() {
