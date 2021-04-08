@@ -6,7 +6,7 @@ const preloader = document.querySelector('.preloader');
 const video = document.querySelector('.video-container');
 const btn = document.querySelector('.switch-btn');
 
-window.addEventListener('DOMContentLoaded', hidePreloader);
+window.addEventListener('load', hidePreloader);
 
 btn.addEventListener('click', videoSwitch);
 
