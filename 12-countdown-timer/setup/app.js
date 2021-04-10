@@ -1,23 +1,89 @@
 const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
 ];
 const weekdays = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
 ];
+
+const giveAway = document.querySelector('.giveaway');
+const displayItems = document.querySelectorAll('.deadline-format h4');
+
+/**
+ * 1 s = 1000 ms
+ * 1 min = 60 s
+ * 1 hr = 60 min
+ * 1 day = 24 hours
+ */
+const oneDayMilliseconds = 24 * 60 * 60 * 1000;
+const oneHourMilliseconds = 60 * 60 * 1000;
+const oneMinuteMilliseconds = 60 * 1000;
+const oneSecondMillisecond = 1000;
+
+const futureDate = new Date(2021, 3, 12, 8, 0, 0);
+const futureDateMilliseconds = futureDate.getTime();
+
+const futureWeekDay = weekdays[futureDate.getDay()];
+const futureMonth = months[futureDate.getMonth()];
+const futureDay = futureDate.getDate();
+const futureYear = futureDate.getFullYear();
+
+const futureHour = futureDate.getHours();
+const futureMinutes =
+  (futureDate.getMinutes() < 10 ? '0' : '') + futureDate.getMinutes();
+
+giveAway.innerText = `giveaway ends on ${futureWeekDay}, ${futureMonth} ${futureDay} ${futureYear}, ${futureHour}:${futureMinutes}am`;
+
+function getRemainingTime() {
+  const currentDateMilliseconds = new Date().getTime();
+  const t = futureDateMilliseconds - currentDateMilliseconds;
+
+  const numberFutureDays = Math.floor(t / oneDayMilliseconds);
+  const numberFutureHours = Math.floor(
+    (t % oneDayMilliseconds) / oneHourMilliseconds
+  );
+  const numberFutureMinutes = Math.floor(
+    (t % oneHourMilliseconds) / oneMinuteMilliseconds
+  );
+  const numberFutureSeconds = Math.floor(
+    (t % oneMinuteMilliseconds) / oneSecondMillisecond
+  );
+
+  const futureCalculations = [
+    numberFutureDays,
+    numberFutureHours,
+    numberFutureMinutes,
+    numberFutureSeconds,
+  ];
+
+  displayItems.forEach((item, index) => {
+    if (futureCalculations[index] <= 0) {
+      futureCalculations[index] = 0;
+    } else {
+      item.innerText = futureCalculations[index];
+    }
+  });
+
+  if (t < 0) {
+    clearInterval(callTimer);
+    giveAway.innerText = `The giveaway has ended`;
+  }
+}
+
+const callTimer = setInterval(getRemainingTime, 100);
