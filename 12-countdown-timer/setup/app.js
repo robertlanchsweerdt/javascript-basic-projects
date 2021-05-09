@@ -31,12 +31,17 @@ const displayItems = document.querySelectorAll('.deadline-format h4');
  * 1 hr = 60 min
  * 1 day = 24 hours
  */
-const oneDayMilliseconds = 24 * 60 * 60 * 1000;
-const oneHourMilliseconds = 60 * 60 * 1000;
-const oneMinuteMilliseconds = 60 * 1000;
-const oneSecondMillisecond = 1000;
+// const oneDayMilliseconds = 24 * 60 * 60 * 1000;
+// const oneHourMilliseconds = 60 * 60 * 1000;
+// const oneMinuteMilliseconds = 60 * 1000;
+// const oneSecondMillisecond = 1000;
 
-const futureDate = new Date(2021, 3, 12, 8, 0, 0);
+const oneSecondMillisecond = 1000;
+const oneMinute = 60 * oneSecondMillisecond;
+const oneHour = 60 * oneMinute;
+const oneDay = 24 * oneHour;
+
+const futureDate = new Date(2021, 4, 12, 8, 0, 0);
 const futureDateMilliseconds = futureDate.getTime();
 
 const futureWeekDay = weekdays[futureDate.getDay()];
@@ -54,15 +59,11 @@ function getRemainingTime() {
   const currentDateMilliseconds = new Date().getTime();
   const t = futureDateMilliseconds - currentDateMilliseconds;
 
-  const numberFutureDays = Math.floor(t / oneDayMilliseconds);
-  const numberFutureHours = Math.floor(
-    (t % oneDayMilliseconds) / oneHourMilliseconds
-  );
-  const numberFutureMinutes = Math.floor(
-    (t % oneHourMilliseconds) / oneMinuteMilliseconds
-  );
+  const numberFutureDays = Math.floor(t / oneDay);
+  const numberFutureHours = Math.floor((t % oneDay) / oneHour);
+  const numberFutureMinutes = Math.floor((t % oneHour) / oneMinute);
   const numberFutureSeconds = Math.floor(
-    (t % oneMinuteMilliseconds) / oneSecondMillisecond
+    (t % oneMinute) / oneSecondMillisecond
   );
 
   const futureCalculations = [
