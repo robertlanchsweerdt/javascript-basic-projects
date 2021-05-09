@@ -31,17 +31,15 @@ const displayItems = document.querySelectorAll('.deadline-format h4');
  * 1 hr = 60 min
  * 1 day = 24 hours
  */
-// const oneDayMilliseconds = 24 * 60 * 60 * 1000;
-// const oneHourMilliseconds = 60 * 60 * 1000;
-// const oneMinuteMilliseconds = 60 * 1000;
-// const oneSecondMillisecond = 1000;
 
 const oneSecondMillisecond = 1000;
 const oneMinute = 60 * oneSecondMillisecond;
 const oneHour = 60 * oneMinute;
 const oneDay = 24 * oneHour;
 
-const futureDate = new Date(2021, 4, 12, 8, 0, 0);
+//const futureDate = new Date(2021, 4, 9, 8, 7, 0);
+const futureDate = new Date('May 9, 2021 08:20:00');
+
 const futureDateMilliseconds = futureDate.getTime();
 
 const futureWeekDay = weekdays[futureDate.getDay()];
@@ -73,18 +71,24 @@ function getRemainingTime() {
     numberFutureSeconds,
   ];
 
+  console.log(futureCalculations);
+
   displayItems.forEach((item, index) => {
     if (futureCalculations[index] <= 0) {
       futureCalculations[index] = 0;
-    } else {
-      item.innerText = futureCalculations[index];
     }
+    item.innerText = futureCalculations[index];
   });
 
   if (t < 0) {
     clearInterval(callTimer);
-    giveAway.innerText = `The giveaway has ended`;
+    window.location.replace('https://www.google.com');
   }
+
+  // if (t < 0) {
+  //   clearInterval(callTimer);
+  //   giveAway.innerText = `The giveaway has ended`;
+  // }
 }
 
 const callTimer = setInterval(getRemainingTime, 100);
